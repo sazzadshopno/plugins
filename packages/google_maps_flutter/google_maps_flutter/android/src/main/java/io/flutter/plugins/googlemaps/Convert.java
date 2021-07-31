@@ -645,6 +645,29 @@ class Convert {
     }
   }
 
+  private static List<WeightedLatLng> toWeightedPoints(Object o) {
+    final List<?> data = toList(o);
+    final List<WeightedLatLng> points = new ArrayList<>(data.size());
+
+    for (Object ob : data) {
+      final List<?> weightedPoint = toList(ob);
+      final List<?> point = toList(weightedPoint.get(0));
+      points.add(
+          new WeightedLatLng(
+              new LatLng(toFloat(point.get(0)), toFloat(point.get(1))),
+              toInt(weightedPoint.get(1))));
+    }
+    return points;
+  }
+
+  private static Gradient toGradient(Object o) {
+    final List<?> data = toList(o);
+    int[] colors = toIntArray(data.get(0));
+    float[] startPoints = toFloatArray(data.get(1));
+    int colorMapSize = toInt(data.get(2));
+    return new Gradient(colors, startPoints, colorMapSize);
+  }
+
   private static List<LatLng> toPoints(Object o) {
     final List<?> data = toList(o);
     final List<LatLng> points = new ArrayList<>(data.size());
