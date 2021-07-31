@@ -150,6 +150,20 @@ class GoogleMapController {
         .updateCircles(circleUpdates, mapId: mapId);
   }
 
+  /// Updates heatmap configuration.
+  ///
+  /// Change listeners are notified once the update has been made on the
+  /// platform side.
+  ///
+  /// The returned [Future] completes after listeners have been notified.
+  Future<void> _updateHeatmaps(_HeatmapUpdates heatmapUpdates) async {
+    assert(heatmapUpdates != null);
+    await channel!.invokeMethod<void>(
+      'heatmaps#update',
+      heatmapUpdates._toMap(),
+    );
+  }
+
   /// Updates tile overlays configuration.
   ///
   /// Change listeners are notified once the update has been made on the

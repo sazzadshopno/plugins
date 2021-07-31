@@ -85,6 +85,12 @@ class FakePlatformGoogleMap {
 
   Set<Circle> circlesToChange = <Circle>{};
 
+  Set<HeatmapId> heatmapIdsToRemove = <HeatmapId>{};
+
+  Set<Heatmap> heatmapsToAdd = <Heatmap>{};
+
+  Set<Heatmap> heatmapsToChange = <Heatmap>{};
+
   Set<TileOverlayId> tileOverlayIdsToRemove = <TileOverlayId>{};
 
   Set<TileOverlay> tileOverlaysToAdd = <TileOverlay>{};
