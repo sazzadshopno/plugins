@@ -76,11 +76,13 @@ final class GoogleMapController
   private final PolygonsController polygonsController;
   private final PolylinesController polylinesController;
   private final CirclesController circlesController;
+  private final HeatmapsController heatmapsController;
   private final TileOverlaysController tileOverlaysController;
   private List<Object> initialMarkers;
   private List<Object> initialPolygons;
   private List<Object> initialPolylines;
   private List<Object> initialCircles;
+  private List<Object> initialHeatmaps;
   private List<Map<String, ?>> initialTileOverlays;
 
   GoogleMapController(
@@ -101,6 +103,7 @@ final class GoogleMapController
     this.polygonsController = new PolygonsController(methodChannel, density);
     this.polylinesController = new PolylinesController(methodChannel, density);
     this.circlesController = new CirclesController(methodChannel, density);
+    this.heatmapsController = new HeatmapsController(methodChannel, density);
     this.tileOverlaysController = new TileOverlaysController(methodChannel);
   }
 
@@ -143,11 +146,13 @@ final class GoogleMapController
     polygonsController.setGoogleMap(googleMap);
     polylinesController.setGoogleMap(googleMap);
     circlesController.setGoogleMap(googleMap);
+    heatmapsController.setGoogleMap(googleMap);
     tileOverlaysController.setGoogleMap(googleMap);
     updateInitialMarkers();
     updateInitialPolygons();
     updateInitialPolylines();
     updateInitialCircles();
+    updateInitialHeatmaps();
     updateInitialTileOverlays();
   }
 
@@ -301,6 +306,17 @@ final class GoogleMapController
           circlesController.changeCircles(circlesToChange);
           List<Object> circleIdsToRemove = call.argument("circleIdsToRemove");
           circlesController.removeCircles(circleIdsToRemove);
+          result.success(null);
+          break;
+        }
+        case "heatmaps#update":
+        {
+          List<Object> heatmapsToAdd = call.argument("heatmapsToAdd");
+          heatmapController.addHeatmaps(heatmapsToAdd);
+          List<Object> heatmapsToChange = call.argument("heatmapsToChange");
+          heatmapsController.changeHeatmaps(heatmapsToChange);
+          List<Object> heatmapIdsToRemove = call.argument("heatmapIdsToRemove");
+          heatmapsController.removeHeatmaps(heatmapIdsToRemove);
           result.success(null);
           break;
         }
@@ -491,6 +507,10 @@ final class GoogleMapController
   public void onCircleClick(Circle circle) {
     circlesController.onCircleTap(circle.getId());
   }
+   @Override
+  public void onHeatmapClick(Heatmap heatmap) {
+    heatmapsController.onHeatmapTap(heatmap.getId());
+  }
 
   @Override
   public void dispose() {
@@ -516,6 +536,7 @@ final class GoogleMapController
     googleMap.setOnPolygonClickListener(listener);
     googleMap.setOnPolylineClickListener(listener);
     googleMap.setOnCircleClickListener(listener);
+    googleMap.setOnHeatmapClickListener(listener);
     googleMap.setOnMapClickListener(listener);
     googleMap.setOnMapLongClickListener(listener);
   }
@@ -756,11 +777,21 @@ final class GoogleMapController
       updateInitialCircles();
     }
   }
+  @Override
+  public void setInitialHeatmaps(Object initialHeatmaps) {
+    ArrayList<?> heatmaps = (ArrayList<?>) initialHeatmaps;
+    this.initialHeatmaps = heatmaps != null ? new ArrayList<>(heatmaps) : null;
+    if (googleMap != null) {
+      updateInitialHeatmaps();
+    }
+  }
 
   private void updateInitialCircles() {
     circlesController.addCircles(initialCircles);
   }
-
+  private void updateInitialHeatmaps() {
+    heatmapsController.addHeatmaps(initialHeatmaps);
+  }
   @Override
   public void setInitialTileOverlays(List<Map<String, ?>> initialTileOverlays) {
     this.initialTileOverlays = initialTileOverlays;
