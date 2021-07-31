@@ -312,7 +312,7 @@ final class GoogleMapController
         case "heatmaps#update":
         {
           List<Object> heatmapsToAdd = call.argument("heatmapsToAdd");
-          heatmapController.addHeatmaps(heatmapsToAdd);
+          heatmapsController.addHeatmaps(heatmapsToAdd);
           List<Object> heatmapsToChange = call.argument("heatmapsToChange");
           heatmapsController.changeHeatmaps(heatmapsToChange);
           List<Object> heatmapIdsToRemove = call.argument("heatmapIdsToRemove");
