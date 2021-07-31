@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-part of google_maps_flutter;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_maps_flutter/plugins/src/types/types.dart';
 
 /// Uniquely identifies a [Heatmap] among [GoogleMap] heatmaps.
 ///
 /// This does not have to be globally unique, only unique among the list.
-@immutable
 class HeatmapId {
   /// Creates an immutable object representing a [HeatmapId] among [GoogleMap] heatmaps.
   ///
@@ -35,7 +36,6 @@ class HeatmapId {
 }
 
 /// A pair of latitude and longitude coordinates, stored as degrees with a given intensity.
-@immutable
 class WeightedLatLng {
   /// Creates an immutable object representing a [WeightedLatLng].
   WeightedLatLng({
@@ -49,7 +49,7 @@ class WeightedLatLng {
   /// The intensity of the [WeightedLatLng].
   final int intensity;
 
-  dynamic _toJson() {
+  dynamic toJson() {
     return <dynamic>[point.toJson(), intensity];
   }
 
@@ -71,7 +71,6 @@ class WeightedLatLng {
 }
 
 /// An immutable gradient consisting of the given colors.
-@immutable
 class HeatmapGradient {
   /// Creates an immutable object representing a [HeatmapGradient]
   HeatmapGradient({
@@ -89,7 +88,7 @@ class HeatmapGradient {
   /// Size of a color map for the heatmap.
   final int colorMapSize;
 
-  dynamic _toJson() {
+  dynamic toJson() {
     return <dynamic>[
       colors.map((Color c) => c.value).toList(),
       startPoints,
@@ -196,7 +195,7 @@ class Heatmap {
     );
   }
 
-  dynamic _toJson() {
+  dynamic toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
 
     void addIfPresent(String fieldName, dynamic value) {
@@ -214,11 +213,11 @@ class Heatmap {
     addIfPresent('zIndex', zIndex);
 
     if (gradient != null) {
-      json['gradient'] = gradient!._toJson();
+      json['gradient'] = gradient!.toJson();
     }
 
     if (points != null) {
-      json['points'] = _pointsToJson();
+      json['points'] = pointsToJson();
     }
 
     return json;
@@ -243,16 +242,16 @@ class Heatmap {
   @override
   int get hashCode => heatmapId.hashCode;
 
-  dynamic _pointsToJson() {
+  dynamic pointsToJson() {
     final List<dynamic> result = <dynamic>[];
     for (final WeightedLatLng point in points) {
-      result.add(point._toJson());
+      result.add(point.toJson());
     }
     return result;
   }
 }
 
-Map<HeatmapId, Heatmap> _keyByHeatmapId(Iterable<Heatmap> heatmaps) {
+Map<HeatmapId, Heatmap> keyByHeatmapId(Iterable<Heatmap> heatmaps) {
   if (heatmaps == null) {
     return <HeatmapId, Heatmap>{};
   }
@@ -260,11 +259,10 @@ Map<HeatmapId, Heatmap> _keyByHeatmapId(Iterable<Heatmap> heatmaps) {
       MapEntry<HeatmapId, Heatmap>(heatmap.heatmapId, heatmap.clone())));
 }
 
-List<Map<String, dynamic>>? _serializeHeatmapSet(Set<Heatmap> heatmaps) {
+/// Serialize heatmap set
+List<Map<String, dynamic>>? serializeHeatmapSet(Set<Heatmap> heatmaps) {
   if (heatmaps == null) {
     return null;
   }
-  return heatmaps
-      .map<Map<String, dynamic>>((Heatmap p) => p._toJson())
-      .toList();
+  return heatmaps.map<Map<String, dynamic>>((Heatmap p) => p.toJson()).toList();
 }

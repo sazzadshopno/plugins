@@ -156,11 +156,11 @@ class GoogleMapController {
   /// platform side.
   ///
   /// The returned [Future] completes after listeners have been notified.
-  Future<void> _updateHeatmaps(_HeatmapUpdates heatmapUpdates) async {
+  Future<void> _updateHeatmaps(HeatmapUpdates heatmapUpdates) async {
     assert(heatmapUpdates != null);
     await channel!.invokeMethod<void>(
       'heatmaps#update',
-      heatmapUpdates._toMap(),
+      heatmapUpdates.toJson(),
     );
   }
 

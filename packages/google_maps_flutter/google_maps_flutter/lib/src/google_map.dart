@@ -277,7 +277,7 @@ class _GoogleMapState extends State<GoogleMap> {
     _polygons = keyByPolygonId(widget.polygons);
     _polylines = keyByPolylineId(widget.polylines);
     _circles = keyByCircleId(widget.circles);
-    _heatmaps = _keyByHeatmapId(widget.heatmaps);
+    _heatmaps = keyByHeatmapId(widget.heatmaps);
   }
 
   @override
@@ -348,8 +348,8 @@ class _GoogleMapState extends State<GoogleMap> {
     final GoogleMapController controller = await _controller.future;
     // ignore: unawaited_futures
     controller._updateHeatmaps(
-        _HeatmapUpdates.from(_heatmaps.values.toSet(), widget.heatmaps));
-    _heatmaps = _keyByHeatmapId(widget.heatmaps);
+        HeatmapUpdates.from(_heatmaps.values.toSet(), widget.heatmaps));
+    _heatmaps = keyByHeatmapId(widget.heatmaps);
   }
 
   void _updateTileOverlays() async {

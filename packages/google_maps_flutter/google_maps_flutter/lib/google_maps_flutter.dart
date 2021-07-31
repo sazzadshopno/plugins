@@ -13,10 +13,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
-import 'package:google_maps_flutter_platform_interface/src/method_channel/method_channel_google_maps_flutter.dart';
+import 'package:google_maps_flutter/plugins/google_maps_flutter_platform_interface.dart';
+import 'package:google_maps_flutter/plugins/src/method_channel/method_channel_google_maps_flutter.dart';
+import 'package:google_maps_flutter/plugins/src/types/heatmap.dart';
+import 'package:google_maps_flutter/plugins/src/types/heatmap_updates.dart';
 
-export 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart'
+export 'package:google_maps_flutter/plugins/google_maps_flutter_platform_interface.dart'
     show
         ArgumentCallbacks,
         ArgumentCallback,
@@ -46,9 +48,8 @@ export 'package:google_maps_flutter_platform_interface/google_maps_flutter_platf
         Tile,
         TileOverlayId,
         TileOverlay,
-        TileProvider;
+        TileProvider,
+        GoogleMapsFlutterPlatform;
 
 part 'src/controller.dart';
 part 'src/google_map.dart';
-part 'src/heatmap.dart';
-part 'src/heatmap_updates.dart';
