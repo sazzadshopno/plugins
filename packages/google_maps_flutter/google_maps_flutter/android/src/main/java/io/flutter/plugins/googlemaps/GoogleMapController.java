@@ -103,7 +103,7 @@ final class GoogleMapController
     this.polygonsController = new PolygonsController(methodChannel, density);
     this.polylinesController = new PolylinesController(methodChannel, density);
     this.circlesController = new CirclesController(methodChannel, density);
-    this.heatmapsController = new HeatmapsController(methodChannel, density);
+    this.heatmapsController = new HeatmapsController(methodChannel);
     this.tileOverlaysController = new TileOverlaysController(methodChannel);
   }
 
@@ -507,10 +507,6 @@ final class GoogleMapController
   public void onCircleClick(Circle circle) {
     circlesController.onCircleTap(circle.getId());
   }
-   @Override
-  public void onHeatmapClick(Heatmap heatmap) {
-    heatmapsController.onHeatmapTap(heatmap.getId());
-  }
 
   @Override
   public void dispose() {
@@ -536,7 +532,6 @@ final class GoogleMapController
     googleMap.setOnPolygonClickListener(listener);
     googleMap.setOnPolylineClickListener(listener);
     googleMap.setOnCircleClickListener(listener);
-    googleMap.setOnHeatmapClickListener(listener);
     googleMap.setOnMapClickListener(listener);
     googleMap.setOnMapLongClickListener(listener);
   }

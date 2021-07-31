@@ -667,7 +667,26 @@ class Convert {
     int colorMapSize = toInt(data.get(2));
     return new Gradient(colors, startPoints, colorMapSize);
   }
+  private static int[] toIntArray(Object o) {
+      final List<?> data = toList(o);
+      final int[] ints = new int[data.size()];
 
+      int index = 0;
+      for (Object ob : data) {
+        ints[index++] = toInt(ob);
+      }
+      return ints;
+    }
+  private static float[] toFloatArray(Object o) {
+    final List<?> data = toList(o);
+    final float[] floats = new float[data.size()];
+
+    int index = 0;
+    for (Object ob : data) {
+      floats[index++] = toFloat(ob);
+    }
+    return floats;
+  }
   private static List<LatLng> toPoints(Object o) {
     final List<?> data = toList(o);
     final List<LatLng> points = new ArrayList<>(data.size());
