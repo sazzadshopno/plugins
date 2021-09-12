@@ -6,6 +6,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "GoogleMapCircleController.h"
 #import "GoogleMapMarkerController.h"
+#import "GoogleMapHeatmapController.h"
 #import "GoogleMapPolygonController.h"
 #import "GoogleMapPolylineController.h"
 
