@@ -25,7 +25,7 @@ export 'tile.dart';
 export 'tile_overlay.dart';
 export 'tile_provider.dart';
 export 'ui.dart';
-
+export 'heatmap.dart';
 // Export the utils, they're used by the Widget
 export 'utils/circle.dart';
 export 'utils/marker.dart';

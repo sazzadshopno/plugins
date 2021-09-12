@@ -49,6 +49,9 @@ export 'package:google_maps_flutter/plugins/google_maps_flutter_platform_interfa
         TileOverlayId,
         TileOverlay,
         TileProvider,
+        Heatmap,
+        WeightedLatLng,
+        HeatmapGradient,
         GoogleMapsFlutterPlatform;
 
 part 'src/controller.dart';
